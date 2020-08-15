@@ -8,7 +8,23 @@
     <script type="module" src="/build/button-web-component.esm.js"></script>
     <script nomodule src="/build/button-web-component.js"></script>
   </head>
-  <body>
-    <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component>
+  <body style="display: flex; justify-content: center; align-items: stretch;">
+    <button-component
+      loadingtext="Fetching"
+      type="primary"
+    >
+      Fetch Users
+    </button-component>
   </body>
+  <script>
+    const buttonCustomElement = document.querySelector('button-component');
+    buttonCustomElement.addEventListener('zpClick', () => {
+      buttonCustomElement.disabled = true;
+      return fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(json => console.log(json))
+        .then(() => buttonCustomElement.disabled = false)
+        .then(() => alert('Check console'));
+    });
+  </script>
 </html>
